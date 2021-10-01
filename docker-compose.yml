@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  database:
+    image: mariadb
+    hostname: proyecto.db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: R00T_!2#
+      MYSQL_DATABASE: Proyecto
+      MYSQL_USER: proyecto
+      MYSQL_PASSWORD: proyecto1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/2.sql"
+  api-server:
+    image: backendrosario
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes: 
+      - ./api:/app/api/  
+    environment: 
+      MYSQL_ROOT_PASS: R00T_!2#
+      MYSQL_ROOT_USER: root
+      MYSQL_HOST: proyecto.db
+      MYSQL_PORT: 3306
+      MYSQL_USER: proyecto
+      MYSQL_PASS: proyecto1234
+    ports:
+      - "9980:9980"
+    depends_on: 
+      - "database"
