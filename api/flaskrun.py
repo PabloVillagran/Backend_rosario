@@ -12,4 +12,4 @@ flask.api.add_resource(SeccionRest.SeccionManager, '/api/seccion')
 flask.api.add_resource(UsuarioRest.UsuarioManager, '/api/usuario')
 
 if __name__ == '__main__':
-    flask.app.run(debug=True, port='9980')
+    flask.app.run(debug=True, host='0.0.0.0', port='9980')
