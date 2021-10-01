@@ -85,10 +85,10 @@ class CursoManager(Resource):
             return jsonify({
                 'resultado': f'Id {id} no encontrado.'
             })
-        current_user = Curso.query.get(id)
-        db.session.delete(current_user)
+        current = Curso.query.get(id)
+        db.session.delete(current)
         db.session.commit()
         return jsonify({
-            'Message': f'Curso {current_user.curso} fue eliminado. '
+            'Message': f'Curso {current.curso} fue eliminado. '
         })
 
