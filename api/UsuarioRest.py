@@ -106,7 +106,3 @@ class UsuarioManager(Resource):
         return jsonify({
             'Message': f'Usuario {current_user.usuario} fue eliminado. '
         })
-
-api.add_resource(UsuarioManager, '/api/usuario')
-if __name__ == '__main__':
-    app.run(debug=True)

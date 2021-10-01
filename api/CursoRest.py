@@ -92,6 +92,3 @@ class CursoManager(Resource):
             'Message': f'Curso {current_user.curso} fue eliminado. '
         })
 
-api.add_resource(CursoManager, '/api/curso')
-if __name__ == '__main__':
-    app.run(debug=True)

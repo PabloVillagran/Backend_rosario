@@ -9,7 +9,7 @@ class Seccion (db.Model):
 
 class SeccionSchema(mellow.Schema):
     class Meta:
-        fields =('seccion', 'descripcion', 'idSeccion', 'idCarrera', 'idGrado', 'ao')
+        field = 'seccion'
 
 seccion = SeccionSchema()
 seccions = SeccionSchema(many = True)
@@ -71,7 +71,3 @@ class SeccionManager(Resource):
         return jsonify({
             'Message': f'Seccion {current.seccion} fue eliminado. '
         })
-
-api.add_resource(SeccionManager, '/api/seccion')
-if __name__ == '__main__':
-    app.run(debug=True)
