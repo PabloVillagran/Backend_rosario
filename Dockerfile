@@ -32,4 +32,4 @@ EXPOSE 9980
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 # CMD ["python", "ws.py"]
-ENTRYPOINT [ "python", "api/ws.py"]
+ENTRYPOINT [ "python", "api/flaskrun.py"]
