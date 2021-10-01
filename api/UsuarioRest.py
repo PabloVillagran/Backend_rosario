@@ -1,4 +1,4 @@
-from flasktest import db, mellow, Resource, request, jsonify, api, app
+from flasksetup import db, mellow, Resource, request, jsonify, api, app
 
 class Usuario (db.Model):
   id = db.Column('ID_USUARIO', db.Integer, primary_key = True)
@@ -96,16 +96,13 @@ class UsuarioManager(Resource):
     def delete():
         try: id = request.args['id']
         except Exception as _: id = None
-
         if not id:
             return jsonify({
                 'resultado': f'Id {id} no encontrado.'
             })
-
         current_user = Usuario.query.get(id)
         db.session.delete(current_user)
         db.session.commit()
-
         return jsonify({
             'Message': f'Usuario {current_user.usuario} fue eliminado. '
         })
