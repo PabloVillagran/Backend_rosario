@@ -15,6 +15,7 @@ services:
     volumes:
       - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/1.sql"
       - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/2.sql"
+      - db_data:/var/lib/mysql
   api-server:
     image: backendrosario
     build:
@@ -33,3 +34,7 @@ services:
       - "9980:9980"
     depends_on: 
       - "database"
+
+volumes:
+  db_data: {}
+      
