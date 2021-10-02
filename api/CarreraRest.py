@@ -4,7 +4,7 @@ class Carrera (db.Model):
     id = db.Column('ID_CARRERA', db.Integer, primary_key = True)
     carrera = db.Column('CARRERA', db.String(100))
   
-    def __init__(self, carrera, descripcion, idSeccion, idCarrera, idGrado, ao):
+    def __init__(self, carrera):
         self.carrera = carrera
 
 class CarreraSchema(mellow.Schema):
