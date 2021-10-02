@@ -43,8 +43,14 @@ class UsuarioManager(Resource):
         try: id = request.args['id']
         except Exception as _: id = None
 
+        try: tipo = request.args['tipoUsuario']
+        except Exception as _: tipo = None
+
         if not id:
-            rusuarios = Usuario.query.all()
+            if tipo:
+                rusuarios = Usuario.query.filter(Usuario.tipo == tipo)
+            else:
+                rusuarios = Usuario.query.all()
             return jsonify(usuarios.dump(rusuarios))
         rusuario = Usuario.query.get(id)
         return jsonify(usuario.dump(rusuario))
