@@ -30,14 +30,14 @@ class AlumnoManager(Resource):
 
     @staticmethod
     def post():
-        alumno = request.json['alumno']
+        idUsuario = request.json['idUsuario']
 
-        nuevo = Alumno(alumno)
+        nuevo = Alumno(idUsuario)
         db.session.add(nuevo)
         db.session.commit()
 
         return jsonify({
-            'resultado': f'Alumno {alumno} creado.'
+            'resultado': f'Alumno con usuario {idUsuario} creado.'
         })
 
     @staticmethod
