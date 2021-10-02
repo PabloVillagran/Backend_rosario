@@ -1,5 +1,5 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
-from UsuarioRest import Usuario, UsuarioSchema
+from UsuarioRest import Usuario
 
 class Alumno (db.Model):
     id = db.Column('ID_ALUMNO', db.Integer, primary_key = True)

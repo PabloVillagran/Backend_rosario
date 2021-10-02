@@ -56,11 +56,9 @@ class AdministrativoManager(Resource):
         db.session.refresh(nuevo)
         db.session.commit()
         
-        administrativo = request.json['administrativo']
-
         return jsonify({
             'id':nuevo.id,
-            'resultado': f'Administrativo {administrativo} creado.'
+            'resultado': f'Administrativo {idUsuario} creado.'
         })
 
     @staticmethod
