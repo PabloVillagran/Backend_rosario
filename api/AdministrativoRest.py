@@ -1,4 +1,5 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from UsuarioRest import Usuario
 
 class Administrativo (db.Model):
     id = db.Column('ID_ADMINISTRATIVO', db.Integer, primary_key = True)
@@ -30,11 +31,30 @@ class AdministrativoManager(Resource):
 
     @staticmethod
     def post():
-        administrativo = request.json['administrativo']
+        try:
+            usuario = request.json['usuario']
+            nombres = request.json['nombres']
+            apellidos = request.json['apellidos']
+            telefono = request.json['telefono']
+            email = request.json['email']
+            tipo = request.json['tipo']
+            domicilio = request.json['domicilio']
+            password = request.json['password']
+            nUsuario = Usuario(usuario, nombres, apellidos, telefono, email, tipo, domicilio, password)
+            db.session.add(nUsuario)
+            db.session.flush()
+            db.session.refresh(nUsuario)
+        except Exception as _e:
+            return jsonify({
+                'err': f'{_e}'
+            })
 
-        nuevo = Administrativo(administrativo)
+        idUsuario = nUsuario.id
+        nuevo = Administrativo(idUsuario)
         db.session.add(nuevo)
         db.session.commit()
+        
+        administrativo = request.json['administrativo']
 
         return jsonify({
             'resultado': f'Administrativo {administrativo} creado.'
