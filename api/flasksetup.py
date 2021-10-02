@@ -11,6 +11,7 @@ api = Api(app)
 con_string = "mariadb+mysqlconnector://"+c_params.con_string
 app.config['SQLALCHEMY_DATABASE_URI'] = con_string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 CORS(app)
 
