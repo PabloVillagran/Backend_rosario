@@ -9,7 +9,7 @@ class Grado (db.Model):
 
 class GradoSchema(mellow.Schema):
     class Meta:
-        field = 'grado'
+        fields = ('id','grado')
 
 grado = GradoSchema()
 grados = GradoSchema(many = True)
@@ -34,9 +34,12 @@ class GradoManager(Resource):
 
         nuevo = Grado(grado)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Grado {grado} creado.'
         })
 

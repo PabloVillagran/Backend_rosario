@@ -9,7 +9,7 @@ class Carrera (db.Model):
 
 class CarreraSchema(mellow.Schema):
     class Meta:
-        field = 'carrera'
+        fields = ('id','carrera')
 
 carrera = CarreraSchema()
 carreras = CarreraSchema(many = True)
@@ -34,9 +34,12 @@ class CarreraManager(Resource):
 
         nuevo = Carrera(carrera)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Carrera {carrera} creado.'
         })
 

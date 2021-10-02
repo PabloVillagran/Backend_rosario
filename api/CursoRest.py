@@ -19,7 +19,7 @@ class Curso (db.Model):
 
 class CursoSchema(mellow.Schema):
     class Meta:
-        fields =('curso', 'descripcion', 'idSeccion', 'idCarrera', 'idGrado', 'ao')
+        fields =('id', 'curso', 'descripcion', 'idSeccion', 'idCarrera', 'idGrado', 'ao')
 
 curso = CursoSchema()
 cursos = CursoSchema(many = True)
@@ -49,9 +49,12 @@ class CursoManager(Resource):
 
         nuevo = Curso(curso, descripcion, idSeccion, idCarrera, idGrado, ao)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Curso {curso} creado.'
         })
 

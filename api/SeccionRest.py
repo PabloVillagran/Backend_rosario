@@ -9,7 +9,7 @@ class Seccion (db.Model):
 
 class SeccionSchema(mellow.Schema):
     class Meta:
-        field = 'seccion'
+        fields = ('id','seccion')
 
 seccion = SeccionSchema()
 seccions = SeccionSchema(many = True)
@@ -34,9 +34,12 @@ class SeccionManager(Resource):
 
         nuevo = Seccion(seccion)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Seccion {seccion} creado.'
         })
 

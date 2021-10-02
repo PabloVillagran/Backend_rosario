@@ -62,9 +62,12 @@ class UsuarioManager(Resource):
 
         nUsuario = Usuario(usuario, nombres, apellidos, telefono, email, tipo, domicilio, password)
         db.session.add(nUsuario)
+        db.session.flush()
+        db.session.refresh(nUsuario)
         db.session.commit()
 
         return jsonify({
+            'id':nUsuario.id,
             'resultado': f'Usuario {usuario} creado.'
         })
 

@@ -10,7 +10,7 @@ class Administrativo (db.Model):
 
 class AdministrativoSchema(mellow.Schema):
     class Meta:
-        field = 'idUsuario'
+        fields = ('id', 'idUsuario')
 
 administrativo = AdministrativoSchema()
 administrativos = AdministrativoSchema(many = True)
@@ -52,11 +52,14 @@ class AdministrativoManager(Resource):
         idUsuario = nUsuario.id
         nuevo = Administrativo(idUsuario)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
         
         administrativo = request.json['administrativo']
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Administrativo {administrativo} creado.'
         })
 

@@ -10,7 +10,7 @@ class Alumno (db.Model):
 
 class AlumnoSchema(mellow.Schema):
     class Meta:
-        field = 'idUsuario'
+        fields = ('id', 'idUsuario')
 
 alumno = AlumnoSchema()
 alumnos = AlumnoSchema(many = True)
@@ -52,9 +52,12 @@ class AlumnoManager(Resource):
         idUsuario = nUsuario.id
         nuevo = Alumno(idUsuario)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id,
             'resultado': f'Alumno con usuario {idUsuario} creado.'
         })
 

@@ -21,7 +21,7 @@ class Calificacion (db.Model):
 
 class CalificacionSchema(mellow.Schema):
     class Meta:
-        fields = ('idMatricula', 'idCursoMateria', 'nota', 'descripcion')
+        fields = ('id', 'idMatricula', 'idCursoMateria', 'nota', 'descripcion')
 
 calificacion = CalificacionSchema()
 calificacions = CalificacionSchema(many = True)
@@ -49,9 +49,12 @@ class CalificacionManager(Resource):
 
         nuevo = Calificacion(idMatricula, idCursoMateria, nota, descripcion)
         db.session.add(nuevo)
+        db.session.flush()
+        db.session.refresh(nuevo)
         db.session.commit()
 
         return jsonify({
+            'id':nuevo.id, 
             'resultado': f'Calificacion {descripcion} {nota} creado.'
         })
 
