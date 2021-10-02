@@ -1,4 +1,5 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from UsuarioRest import Usuario, UsuarioSchema
 
 class Alumno (db.Model):
     id = db.Column('ID_ALUMNO', db.Integer, primary_key = True)
@@ -30,8 +31,25 @@ class AlumnoManager(Resource):
 
     @staticmethod
     def post():
-        idUsuario = request.json['idUsuario']
+        try:
+            usuario = request.json['usuario']
+            nombres = request.json['nombres']
+            apellidos = request.json['apellidos']
+            telefono = request.json['telefono']
+            email = request.json['email']
+            tipo = request.json['tipo']
+            domicilio = request.json['domicilio']
+            password = request.json['password']
+            nUsuario = Usuario(usuario, nombres, apellidos, telefono, email, tipo, domicilio, password)
+            db.session.add(nUsuario)
+            db.session.flush()
+            db.session.refresh(nUsuario)
+        except Exception as _e:
+            return jsonify({
+                'err': f'{_e}'
+            })
 
+        idUsuario = nUsuario.id
         nuevo = Alumno(idUsuario)
         db.session.add(nuevo)
         db.session.commit()

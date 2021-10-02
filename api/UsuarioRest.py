@@ -23,7 +23,7 @@ class Usuario (db.Model):
 
 class UsuarioSchema(mellow.Schema):
     class Meta:
-        fields =('usuario', 
+        fields =('id', 'usuario', 
       'nombres', 
       'apellidos', 
       'telefono', 
