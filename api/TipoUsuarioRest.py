@@ -1,8 +1,8 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
 
 class TipoUsuario (db.Model):
-    id = db.Column('ID_TIPO_PAGO', db.Integer, primary_key = True)
-    tipoUsuario = db.Column('TIPO_PAGO', db.String(100))
+    id = db.Column('ID_TIPO_USUARIO', db.Integer, primary_key = True)
+    tipoUsuario = db.Column('TIPO_USUARIO', db.String(100))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
     
     def __init__(self, tipoUsuario, descripcion):
@@ -43,7 +43,7 @@ class TipoUsuarioManager(Resource):
 
         return jsonify({
             'id':nuevo.id,
-            'resultado': f'TipoUsuario {tipoUsuario} creado.'
+            'resultado': f'TipoUsuario {descripcion} creado.'
         })
 
     @staticmethod
@@ -61,7 +61,7 @@ class TipoUsuarioManager(Resource):
 
         db.session.commit()
         return jsonify({
-            'Message': f'TipoUsuario {current.tipoUsuario} fue actualizado. '
+            'Message': f'TipoUsuario {current.descripcion} fue actualizado. '
         })
 
     @staticmethod

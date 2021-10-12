@@ -2,7 +2,7 @@ from flasksetup import db, mellow, Resource, request, jsonify, api, app
 
 class Horario (db.Model):
 
-    id = db.Column('ID_TIPO_PAGO', db.Integer, primary_key = True)
+    id = db.Column('ID_HORARIO', db.Integer, primary_key = True)
     horaInicio = db.Column('HORA_INICIO', db.Time)
     horaFin = db.Column('HORA_FIN', db.time)
     descripcion = db.Column('DESCRIPCION', db.String(500))
@@ -39,7 +39,7 @@ class HorarioManager(Resource):
         horaFin = request.json['horaFin']
         descripcion = request.json['descripcion']
 
-        nuevo = Horario(horario, descripcion)
+        nuevo = Horario(horario, horaInicio, horaFin, descripcion)
         db.session.add(nuevo)
         db.session.flush()
         db.session.refresh(nuevo)
@@ -66,7 +66,7 @@ class HorarioManager(Resource):
         
         db.session.commit()
         return jsonify({
-            'Message': f'Horario {current.horario} fue actualizado. '
+            'Message': f'Horario {current.descripcion} fue actualizado. '
         })
 
     @staticmethod
@@ -81,5 +81,5 @@ class HorarioManager(Resource):
         db.session.delete(current)
         db.session.commit()
         return jsonify({
-            'Message': f'Horario {current.horario} fue eliminado. '
+            'Message': f'Horario {current.descripcion} fue eliminado. '
         })

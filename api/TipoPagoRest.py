@@ -43,7 +43,7 @@ class TipoPagoManager(Resource):
 
         return jsonify({
             'id':nuevo.id,
-            'resultado': f'TipoPago {tipoPago} creado.'
+            'resultado': f'TipoPago {descripcion} creado.'
         })
 
     @staticmethod
@@ -61,7 +61,7 @@ class TipoPagoManager(Resource):
 
         db.session.commit()
         return jsonify({
-            'Message': f'TipoPago {current.tipoPago} fue actualizado. '
+            'Message': f'TipoPago {current.descripcion} fue actualizado. '
         })
 
     @staticmethod
@@ -76,7 +76,7 @@ class TipoPagoManager(Resource):
         db.session.delete(current)
         db.session.commit()
         return jsonify({
-            'Message': f'TipoPago {current.tipoPago} fue eliminado. '
+            'Message': f'TipoPago {current.descripcion} fue eliminado. '
         })
 
 

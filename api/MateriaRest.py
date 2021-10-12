@@ -1,8 +1,8 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
 
 class Materia (db.Model):
-    id = db.Column('ID_TIPO_PAGO', db.Integer, primary_key = True)
-    tipoPago = db.Column('TIPO_PAGO', db.String(300))
+    id = db.Column('ID_MATERIA', db.Integer, primary_key = True)
+    materia = db.Column('MATERIA', db.String(300))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
     
     def __init__(self, materia, descripcion):

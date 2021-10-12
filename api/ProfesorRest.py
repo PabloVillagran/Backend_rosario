@@ -71,11 +71,11 @@ class ProfesorManager(Resource):
             })
         current = Profesor.query.get(id)
 
-        current.profesor = request.json['profesor']
+        current.idUsuario = request.json['idUsuario']
 
         db.session.commit()
         return jsonify({
-            'Message': f'Profesor {current.profesor} fue actualizado. '
+            'Message': f'Profesor {current.idUsuario} fue actualizado. '
         })
 
     @staticmethod
