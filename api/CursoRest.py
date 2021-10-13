@@ -1,4 +1,8 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from marshmallow import fields
+from CarreraRest import CarreraSchema
+from GradoRest import GradoSchema
+from SeccionRest import SeccionSchema
 
 class Curso (db.Model):
     id = db.Column('ID_CURSO', db.Integer, primary_key = True)
@@ -8,18 +12,28 @@ class Curso (db.Model):
     idCarrera = db.Column('ID_CARRERA', db.Integer, db.ForeignKey('carrera.ID_CARRERA'))
     idGrado = db.Column('ID_GRADO', db.Integer, db.ForeignKey('grado.ID_GRADO'))
     ao = db.Column('AO', db.Integer)
-  
-    def __init__(self, curso, descripcion, idSeccion, idCarrera, idGrado, ao):
+    
+    seccion = db.relationship('Seccion', backref=db.backref('_seccion', uselist=False))
+    carrera = db.relationship('Carrera', backref=db.backref('_carrera', uselist=False))
+    grado = db.relationship('Grado', backref=db.backref('_grado', uselist=False))
+
+    def __init__(self, curso, descripcion, idSeccion, idCarrera, idGrado, ao, seccion, carrera, grado):
         self.curso = curso
         self.descripcion = descripcion
         self.idSeccion = idSeccion
         self.idCarrera = idCarrera
         self.idGrado = idGrado
         self.ao = ao
+        self.seccion = seccion
+        self.carrera = carrera
+        self.grado = grado
 
 class CursoSchema(mellow.Schema):
+    seccion = fields.Nested(SeccionSchema)
+    carrera = fields.Nested(CarreraSchema)
+    grado = fields.Nested(GradoSchema)
     class Meta:
-        fields =('id', 'curso', 'descripcion', 'idSeccion', 'idCarrera', 'idGrado', 'ao')
+        fields =('id', 'curso', 'descripcion', 'idSeccion', 'idCarrera', 'idGrado', 'ao', 'seccion', 'carrera', 'grado')
 
 curso = CursoSchema()
 cursos = CursoSchema(many = True)
