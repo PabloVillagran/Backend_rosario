@@ -17,16 +17,13 @@ class Curso (db.Model):
     carrera = db.relationship('Carrera', backref=db.backref('_carrera', uselist=False))
     grado = db.relationship('Grado', backref=db.backref('_grado', uselist=False))
 
-    def __init__(self, curso, descripcion, idSeccion, idCarrera, idGrado, ao, seccion, carrera, grado):
+    def __init__(self, curso, descripcion, idSeccion, idCarrera, idGrado, ao):
         self.curso = curso
         self.descripcion = descripcion
         self.idSeccion = idSeccion
         self.idCarrera = idCarrera
         self.idGrado = idGrado
         self.ao = ao
-        self.seccion = seccion
-        self.carrera = carrera
-        self.grado = grado
 
 class CursoSchema(mellow.Schema):
     seccion = fields.Nested(SeccionSchema)

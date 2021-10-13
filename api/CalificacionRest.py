@@ -1,18 +1,18 @@
-#  ID_CALIFICACION int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-#  ID_MATRICULA int NOT NULL,
-#  ID_CURSO_MATERIA int NOT NULL,
-#  NOTA decimal(10,0) NOT NULL,
-#  DESCRIPCION varchar(1000) NOT NULL, 
-
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from flask import fields
+from MatriculaRest import MatriculaSchema
+from CursoMateriaRest import CursoMateriaSchema
 
 class Calificacion (db.Model):
     id = db.Column('ID_CALIFICACION', db.Integer, primary_key = True)
-    idMatricula = db.Column('ID_MATRICULA', db.Integer)
-    idCursoMateria = db.Column('ID_CURSO_MATERIA', db.Integer)
+    idMatricula = db.Column('ID_MATRICULA', db.Integer, db.ForeignKey('matricula.ID_MATRICULA'))
+    idCursoMateria = db.Column('ID_CURSO_MATERIA', db.Integer, db.ForeignKey('curso_materia.ID_CURSO_MATERIA'))
     nota = db.Column('NOTA', db.Numeric(10,0))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
-    
+
+    matricula = db.relationship('Matricula', backref=db.backref('_matricula', uselist=False))
+    cursoMateria = db.relationship('CursoMateria', backref=db.backref('_curso_materia', uselist=False))
+
     def __init__(self, idMatricula, idCursoMateria, nota, descripcion):
         self.idMatricula = idMatricula
         self.idCursoMateria = idCursoMateria
@@ -20,8 +20,10 @@ class Calificacion (db.Model):
         self.descripcion = descripcion
 
 class CalificacionSchema(mellow.Schema):
+    matricula = fields.Nested(MatriculaSchema)
+    cursoMateria = fields.Nested(CursoMateriaSchema)
     class Meta:
-        fields = ('id', 'idMatricula', 'idCursoMateria', 'nota', 'descripcion')
+        fields = ('id', 'idMatricula', 'idCursoMateria', 'nota', 'descripcion', 'matricula', 'cursoMateria')
 
 calificacion = CalificacionSchema()
 calificacions = CalificacionSchema(many = True)

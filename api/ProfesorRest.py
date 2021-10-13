@@ -1,14 +1,18 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
-from UsuarioRest import Usuario
+from marshmallow import fields
+from UsuarioRest import Usuario, UsuarioSchema
 
 class Profesor (db.Model):
   id = db.Column('ID_PROFESOR', db.Integer, primary_key = True)
-  idUsuario = db.Column('ID_USUARIO', db.Integer)
+  idUsuario = db.Column('ID_USUARIO', db.Integer, db.ForeignKey('usuario.ID_USUARIO'))
+
+  usuario = db.relationship('Usuario', backref=db.backref('_usuario', uselist=False))
   
   def __init__(self, idUsuario):
     self.idUsuario = idUsuario
 
 class ProfesorSchema(mellow.Schema):
+    usuario = fields.Nested(UsuarioSchema)
     class Meta:
         fields = ('id', 'idUsuario')
 

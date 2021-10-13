@@ -4,7 +4,6 @@ import json
 class Seccion (db.Model):
     id = db.Column('ID_SECCION', db.Integer, primary_key = True)
     seccion = db.Column('SECCION', db.String(100))
-    #cursos = db.relationship('Curso', backref='_seccion', lazy=True)
 
     def __init__(self, seccion):
         self.seccion = seccion

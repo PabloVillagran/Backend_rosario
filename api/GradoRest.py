@@ -3,8 +3,7 @@ from flasksetup import db, mellow, Resource, request, jsonify, api, app
 class Grado (db.Model):
     id = db.Column('ID_GRADO', db.Integer, primary_key = True)
     grado = db.Column('GRADO', db.String(100))
-    #cursos = db.relationship('Curso', backref='grado', lazy=True)
-  
+    
     def __init__(self, grado):
         self.grado = grado
 

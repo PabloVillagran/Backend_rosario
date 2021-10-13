@@ -1,16 +1,20 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
-from UsuarioRest import Usuario
+from marshmallow import fields
+from UsuarioRest import Usuario, UsuarioSchema
 
 class Administrativo (db.Model):
     id = db.Column('ID_ADMINISTRATIVO', db.Integer, primary_key = True)
-    idUsuario = db.Column('ID_USUARIO', db.String(100))
+    idUsuario = db.Column('ID_USUARIO', db.Integer, db.ForeignKey('usuario.ID_USUARIO'))
+
+    usuario = db.relationship('Usuario', backref=db.backref('_usuario', uselist=False))
     
     def __init__(self, idUsuario):
         self.idUsuario = idUsuario
 
 class AdministrativoSchema(mellow.Schema):
+    usuario = fields.Nested(UsuarioSchema)
     class Meta:
-        fields = ('id', 'idUsuario')
+        fields = ('id', 'idUsuario', 'usuario')
 
 administrativo = AdministrativoSchema()
 administrativos = AdministrativoSchema(many = True)

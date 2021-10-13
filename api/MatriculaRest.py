@@ -1,4 +1,6 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from marshmallow import fields
+from AlumnoRest import AlumnoSchema
 
 class Matricula (db.Model):
 
@@ -6,9 +8,11 @@ class Matricula (db.Model):
     fechaIngreso = db.Column('FECHA_INGRESO', db.DateTime)
     fechaEgreso = db.Column('FECHA_EGRESO', db.DateTime)
     ao = db.Column('AO', db.Integer)
-    idAlumno = db.Column('ID_ALUMNO', db.Integer)
+    idAlumno = db.Column('ID_ALUMNO', db.Integer, db.ForeignKey('alumno.ID_ALUMNO'))
     nota = db.Column('NOTAS', db.String(1000))
-    
+
+    alumno = db.relationship('Alumno', backref=db.backref('_alumno', uselist=False))
+
     def __init__(self, fechaIngreso, fechaEgreso, ao, idAlumno, nota):
         self.fechaIngreso = fechaIngreso
         self.fechaEgreso = fechaEgreso
@@ -17,8 +21,9 @@ class Matricula (db.Model):
         self.nota = nota
 
 class MatriculaSchema(mellow.Schema):
+    alumno = fields.Nested(AlumnoSchema)
     class Meta:
-        fields = ('id','fechaIngreso', 'fechaEgreso', 'ao', 'idAlumno', 'nota')
+        fields = ('id','fechaIngreso', 'fechaEgreso', 'ao', 'idAlumno', 'nota', 'alumno')
 
 matricula = MatriculaSchema()
 matriculas = MatriculaSchema(many = True)

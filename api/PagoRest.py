@@ -1,14 +1,20 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from marshmallow import fields
+from MatriculaRest import MatriculaSchema
+from TipoPagoRest import TipoPagoSchema
 
 class Pago (db.Model):
 
     id = db.Column('ID_PAGO', db.Integer, primary_key = True)
     monto = db.Column('MONTO', db.Numeric(10,0))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
-    idMatricula = db.Column('ID_MATRICULA', db.Integer)
-    idTipoPago = db.Column('ID_TIPO_PAGO', db.Integer)
+    idMatricula = db.Column('ID_MATRICULA', db.Integer, db.ForeignKey('matricula.ID_MATRICULA'))
+    idTipoPago = db.Column('ID_TIPO_PAGO', db.Integer, db.ForeignKey('tipo_pago.ID_TIPO_PAGO'))
     fechaVencimiento = db.Column('FECHA_VENCIMIENTO', db.DateTime)
     fechaPago = db.Column('FECHA_PAGO', db.DateTime)
+
+    matricula = db.relationship('Matricula', backref=db.backref('_matricula', uselist=False))
+    tipoPago = db.relationship('TipoPago', backref=db.backref('_tipo_pago', uselist=False))
     
     def __init__(self, monto, descripcion, idMatricula, idTipoPago, fechaVencimiento, fechaPago):
         self.fechaIngreso = monto
@@ -19,8 +25,10 @@ class Pago (db.Model):
         self.fechaPago = fechaPago
 
 class PagoSchema(mellow.Schema):
+    matricula = fields.Nested(MatriculaSchema)
+    tipoPago = fields.Nested(TipoPagoSchema)
     class Meta:
-        fields = ('id', 'monto', 'descripcion', 'idMatricula', 'idTipoPago', 'fechaVencimiento', 'fechaPago')
+        fields = ('id', 'monto', 'descripcion', 'idMatricula', 'idTipoPago', 'fechaVencimiento', 'fechaPago', 'matricula', 'tipoPago')
 
 pago = PagoSchema()
 pagos = PagoSchema(many = True)

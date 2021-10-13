@@ -1,19 +1,22 @@
-#  ID_CURSO_MATERIA int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-#  ID_HORARIO int NOT NULL,
-#  ID_MATERIA int NOT NULL,
-#  ID_CURSO int NOT NULL,
-#  DESCRIPCION varchar(1000) NOT NULL,
-#  ID_PROFESOR int NOT NULL
-
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from marshmallow import fields
+from HorarioRest import Horario, HorarioSchema
+from MateriaRest import Materia, MateriaSchema
+from CursoRest import Curso, CursoSchema
+from ProfesorRest import ProfesorSchema
 
 class CursoMateria (db.Model):
     id = db.Column('ID_CURSO_MATERIA', db.Integer, primary_key = True)
-    idHorario = db.Column('ID_HORARIO', db.Integer)
-    idMateria = db.Column('ID_MATERIA', db.Integer)
-    idCurso = db.Column('ID_CURSO', db.Integer)
+    idCurso = db.Column('ID_CURSO', db.Integer, db.ForeignKey('curso.ID_CURSO'))
+    idMateria = db.Column('ID_MATERIA', db.Integer, db.ForeignKey('materia.ID_MATERIA'))
+    idHorario = db.Column('ID_HORARIO', db.Integer, db.ForeignKey('horario.ID_HORARIO'))
+    idProfesor = db.Column('ID_PROFESOR', db.Integer, db.ForeignKey('profesor.ID_PROFESOR'))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
-    idProfesor = db.Column('ID_PROFESOR', db.Integer)
+
+    curso = db.relationship('Curso', backref=db.backref('_curso', uselist=False))
+    materia = db.relationship('Materia', backref=db.backref('_materia', uselist=False))
+    horario = db.relationship('Horario', backref=db.backref('_horario', uselist=False))
+    profesor = db.relationship('Profesor', backref=db.backref('_profesor', uselist=False))
     
     def __init__(self, idHorario, idMateria, idCurso, descripcion, idProfesor):
         self.idHorario = idHorario
@@ -23,8 +26,12 @@ class CursoMateria (db.Model):
         self.idProfesor = idProfesor
 
 class CursoMateriaSchema(mellow.Schema):
+    curso = fields.Nested(CursoSchema)
+    materia = fields.Nested(MateriaSchema)
+    horario = fields.Nested(HorarioSchema)
+    profesor = fields.Nested(ProfesorSchema)
     class Meta:
-        fields = ('id','idHorario', 'idMateria', 'idCurso', 'descripcion', 'idProfesor')
+        fields = ('id','idHorario', 'idMateria', 'idCurso', 'descripcion', 'idProfesor', 'curso', 'materia', 'horario', 'profesor')
 
 cursoMateria = CursoMateriaSchema()
 cursoMaterias = CursoMateriaSchema(many = True)

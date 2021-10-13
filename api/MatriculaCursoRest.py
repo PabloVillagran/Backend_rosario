@@ -1,11 +1,17 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
+from marshmallow import fields
+from CursoRest import CursoSchema
+from MatriculaRest import MatriculaSchema
 
 class MatriculaCurso (db.Model):
 
     id = db.Column('ID_MATRICULA_CURSO', db.Integer, primary_key = True)
-    idMatricula = db.Column('ID_MATRICULA', db.Integer)
-    idCurso = db.Column('ID_CURSO', db.Integer)
+    idMatricula = db.Column('ID_MATRICULA', db.Integer, db.ForeignKey('matricula.ID_MATRICULA'))
+    idCurso = db.Column('ID_CURSO', db.Integer, db.ForeignKey('curso.ID_CURSO'))
     notas = db.Column('NOTAS', db.String(1000))
+
+    curso = db.relationship('Curso', backref=db.backref('_curso', uselist=False))
+    matricula = db.relationship('Matricula', backref=db.backref('_matricula', uselist=False))
     
     def __init__(self, idMatricula, idCurso, notas):
         self.idMatricula = idMatricula
@@ -13,8 +19,10 @@ class MatriculaCurso (db.Model):
         self.notas = notas
 
 class MatriculaCursoSchema(mellow.Schema):
+    curso = fields.Nested(CursoSchema)
+    matricula = fields.Nested(MatriculaSchema)
     class Meta:
-        fields = ('id','idMatricula', 'idCurso', 'notas')
+        fields = ('id','idMatricula', 'idCurso', 'notas', 'curso', 'matricula')
 
 matriculaCurso = MatriculaCursoSchema()
 matriculaCursos = MatriculaCursoSchema(many = True)
