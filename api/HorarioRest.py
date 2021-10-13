@@ -4,7 +4,7 @@ class Horario (db.Model):
 
     id = db.Column('ID_HORARIO', db.Integer, primary_key = True)
     horaInicio = db.Column('HORA_INICIO', db.Time)
-    horaFin = db.Column('HORA_FIN', db.time)
+    horaFin = db.Column('HORA_FIN', db.Time)
     descripcion = db.Column('DESCRIPCION', db.String(500))
     
     def __init__(self, horaInicio, horaFin, descripcion):
