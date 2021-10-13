@@ -3,8 +3,9 @@ from flasksetup import db, mellow, Resource, request, jsonify, api, app
 class Seccion (db.Model):
     id = db.Column('ID_SECCION', db.Integer, primary_key = True)
     seccion = db.Column('SECCION', db.String(100))
-  
-    def __init__(self, seccion, descripcion, idSeccion, idCarrera, idGrado, ao):
+    cursos = db.relationship('Curso', backref='seccion', lazy=True)
+
+    def __init__(self, seccion):
         self.seccion = seccion
 
 class SeccionSchema(mellow.Schema):

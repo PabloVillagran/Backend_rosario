@@ -4,9 +4,9 @@ class Curso (db.Model):
     id = db.Column('ID_CURSO', db.Integer, primary_key = True)
     curso = db.Column('CURSO', db.String(100))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
-    idSeccion = db.Column('ID_SECCION', db.Integer)
-    idCarrera = db.Column('ID_CARRERA', db.Integer)
-    idGrado = db.Column('ID_GRADO', db.Integer)
+    idSeccion = db.Column('ID_SECCION', db.Integer, db.ForeignKey('seccion.ID_SECCION'))
+    idCarrera = db.Column('ID_CARRERA', db.Integer, db.ForeignKey('carrera.ID_CARRERA'))
+    idGrado = db.Column('ID_GRADO', db.Integer, db.ForeignKey('grado.ID_GRADO'))
     ao = db.Column('AO', db.Integer)
   
     def __init__(self, curso, descripcion, idSeccion, idCarrera, idGrado, ao):

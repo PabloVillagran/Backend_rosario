@@ -31,8 +31,8 @@ flask.api.add_resource(MatriculaRest.MatriculaManager, '/api/matricula_curso')
 flask.api.add_resource(PagoRest.PagoManager, '/api/pago')
 flask.api.add_resource(ProfesorRest.ProfesorManager, '/api/profesor')
 flask.api.add_resource(SeccionRest.SeccionManager, '/api/seccion')
-flask.api.add_resource(TipoPagoRest.TipoPagoManager, 'api/tipo_pago')
-flask.api.add_resource(TipoUsuarioRest, '/api/tipo_usuario')
+flask.api.add_resource(TipoPagoRest.TipoPagoManager, '/api/tipo_pago')
+flask.api.add_resource(TipoUsuarioRest.TipoUsuarioManager, '/api/tipo_usuario')
 flask.api.add_resource(UsuarioRest.UsuarioManager, '/api/usuario')
 
 if __name__ == '__main__':
