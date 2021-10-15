@@ -1,5 +1,5 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
-from flask import fields
+from marshmallow import fields
 from MatriculaRest import MatriculaSchema
 from CursoMateriaRest import CursoMateriaSchema
 

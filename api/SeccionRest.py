@@ -1,5 +1,4 @@
 from flasksetup import db, mellow, Resource, request, jsonify, api, app
-import json
 
 class Seccion (db.Model):
     id = db.Column('ID_SECCION', db.Integer, primary_key = True)
