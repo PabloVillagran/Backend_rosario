@@ -6,7 +6,7 @@ class Alumno (db.Model):
     id = db.Column('ID_ALUMNO', db.Integer, primary_key = True)
     idUsuario = db.Column('ID_USUARIO', db.Integer, db.ForeignKey('usuario.ID_USUARIO'))
 
-    usuario = db.relationship('Usuario', backref=db.backref('_usuario', uselist=False))
+    usuario = db.relationship('Usuario', backref=db.backref('_usuario_alumno', uselist=False))
     
     def __init__(self, idUsuario):
         self.idUsuario = idUsuario

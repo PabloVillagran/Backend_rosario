@@ -13,7 +13,7 @@ class Pago (db.Model):
     fechaVencimiento = db.Column('FECHA_VENCIMIENTO', db.DateTime)
     fechaPago = db.Column('FECHA_PAGO', db.DateTime)
 
-    matricula = db.relationship('Matricula', backref=db.backref('_matricula', uselist=False))
+    matricula = db.relationship('Matricula', backref=db.backref('_matricula_pago', uselist=False))
     tipoPago = db.relationship('TipoPago', backref=db.backref('_tipo_pago', uselist=False))
     
     def __init__(self, monto, descripcion, idMatricula, idTipoPago, fechaVencimiento, fechaPago):

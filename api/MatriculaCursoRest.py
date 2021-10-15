@@ -10,8 +10,8 @@ class MatriculaCurso (db.Model):
     idCurso = db.Column('ID_CURSO', db.Integer, db.ForeignKey('curso.ID_CURSO'))
     notas = db.Column('NOTAS', db.String(1000))
 
-    curso = db.relationship('Curso', backref=db.backref('_curso', uselist=False))
-    matricula = db.relationship('Matricula', backref=db.backref('_matricula', uselist=False))
+    curso = db.relationship('Curso', backref=db.backref('_curso_mat', uselist=False))
+    matricula = db.relationship('Matricula', backref=db.backref('_matricula_curso', uselist=False))
     
     def __init__(self, idMatricula, idCurso, notas):
         self.idMatricula = idMatricula
