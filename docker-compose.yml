@@ -14,7 +14,8 @@ services:
       - "3306:3306"
     volumes:
       - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/1.sql"
-      - "./SQL/DATABASE_SQL.sql:/docker-entrypoint-initdb.d/2.sql"
+      - "./SQL/procedures.sql:/docker-entrypoint-initdb.d/2.sql"
+      - "./SQL/inserts.sql:/docker-entrypoint-initdb.d/3.sql"
       - db_data:/var/lib/mysql
   api-server:
     image: backendrosario
