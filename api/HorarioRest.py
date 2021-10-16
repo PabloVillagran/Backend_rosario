@@ -39,7 +39,7 @@ class HorarioManager(Resource):
         horaFin = request.json['horaFin']
         descripcion = request.json['descripcion']
 
-        nuevo = Horario(horario, horaInicio, horaFin, descripcion)
+        nuevo = Horario(horaInicio, horaFin, descripcion)
         db.session.add(nuevo)
         db.session.flush()
         db.session.refresh(nuevo)
