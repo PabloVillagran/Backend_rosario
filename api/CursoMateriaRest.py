@@ -86,7 +86,7 @@ class CursoMateriaManager(Resource):
 
         db.session.commit()
         return jsonify({
-            'Message': f'CursoMateria {current.descripcion} {current.nota} fue actualizado. '
+            'Message': f'CursoMateria {current.descripcion} fue actualizado. '
         })
 
     @staticmethod
@@ -101,6 +101,6 @@ class CursoMateriaManager(Resource):
         db.session.delete(current)
         db.session.commit()
         return jsonify({
-            'Message': f'CursoMateria {current.descripcion} {current.nota} fue eliminado. '
+            'Message': f'CursoMateria {current.descripcion} fue eliminado. '
         })
 
