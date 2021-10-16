@@ -3,20 +3,20 @@ from marshmallow import fields
 from HorarioRest import Horario, HorarioSchema
 from MateriaRest import Materia, MateriaSchema
 from CursoRest import Curso, CursoSchema
-from ProfesorRest import ProfesorSchema
+from UsuarioRest import UsuarioSchema
 
 class CursoMateria (db.Model):
     id = db.Column('ID_CURSO_MATERIA', db.Integer, primary_key = True)
     idCurso = db.Column('ID_CURSO', db.Integer, db.ForeignKey('curso.ID_CURSO'))
     idMateria = db.Column('ID_MATERIA', db.Integer, db.ForeignKey('materia.ID_MATERIA'))
     idHorario = db.Column('ID_HORARIO', db.Integer, db.ForeignKey('horario.ID_HORARIO'))
-    idProfesor = db.Column('ID_PROFESOR', db.Integer, db.ForeignKey('profesor.ID_PROFESOR'))
+    idProfesor = db.Column('ID_PROFESOR', db.Integer, db.ForeignKey('usuario.ID_USUARIO'))
     descripcion = db.Column('DESCRIPCION', db.String(1000))
 
     curso = db.relationship('Curso', backref=db.backref('_curso', uselist=False))
     materia = db.relationship('Materia', backref=db.backref('_materia', uselist=False))
     horario = db.relationship('Horario', backref=db.backref('_horario', uselist=False))
-    profesor = db.relationship('Profesor', backref=db.backref('_profesor', uselist=False))
+    profesor = db.relationship('Usuario', backref=db.backref('_profesor', uselist=False))
     
     def __init__(self, idHorario, idMateria, idCurso, descripcion, idProfesor):
         self.idHorario = idHorario
@@ -29,7 +29,7 @@ class CursoMateriaSchema(mellow.Schema):
     curso = fields.Nested(CursoSchema)
     materia = fields.Nested(MateriaSchema)
     horario = fields.Nested(HorarioSchema)
-    profesor = fields.Nested(ProfesorSchema)
+    profesor = fields.Nested(UsuarioSchema)
     class Meta:
         fields = ('id','idHorario', 'idMateria', 'idCurso', 'descripcion', 'idProfesor', 'curso', 'materia', 'horario', 'profesor')
 
