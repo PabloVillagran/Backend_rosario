@@ -46,7 +46,6 @@ class MatriculaCursoManager(Resource):
         idMatricula = request.json['idMatricula']
         idCurso = request.json['idCurso']
         notas = request.json['notas']
-        descripcion = request.json['descripcion']
 
         nuevo = MatriculaCurso(idMatricula, idCurso, notas)
         db.session.add(nuevo)
