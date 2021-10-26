@@ -17,11 +17,11 @@ class Pago (db.Model):
     tipoPago = db.relationship('TipoPago', backref=db.backref('_tipo_pago', uselist=False))
     
     def __init__(self, monto, descripcion, idMatricula, idTipoPago, fechaVencimiento, fechaPago):
-        self.fechaIngreso = monto
-        self.fechaEgreso = descripcion
-        self.ao = idMatricula
-        self.idAlumno = idTipoPago
-        self.nota = fechaVencimiento
+        self.monto = monto
+        self.descripcion = descripcion
+        self.idMatricula = idMatricula
+        self.idTipoPago = idTipoPago
+        self.fechaVencimiento = fechaVencimiento
         self.fechaPago = fechaPago
 
 class PagoSchema(mellow.Schema):
